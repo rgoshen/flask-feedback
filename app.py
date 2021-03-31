@@ -1,6 +1,6 @@
 """Feedback application."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User
 
@@ -18,7 +18,15 @@ db.create_all()
 toolbar = DebugToolbarExtension(app)
 
 
-@app.route('/')
-def home_page():
-    """Homepage of site."""
-    return render_template('index.html')
+@app.route("/")
+def homepage():
+    """Homepage of site; redirect to register."""
+
+    return redirect("/register")
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    """Register a user: produce form and handle form submission."""
+
+    return render_template("users/register.html")
